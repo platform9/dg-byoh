@@ -140,11 +140,16 @@ func main() {
 			os.Exit(1)
 		}
 	}
-	// Set 'BYOH_SKIP_KERNEL_MODULE_CLEANUP=true' to skip unloading overlay/br_netfilter kernel
+	// Set 'BYOH_SKIP_KERNEL_MODULE_CLEANUP=enable' to skip unloading overlay/br_netfilter kernel
 	// modules during uninstall. Real BYO hosts own their kernel and must unload these modules;
 	// e2e's containerized hosts share Docker's kernel, so unloading them there breaks Docker's
 	// own bridge networking and hangs cluster deletion.
-	skipKernelModuleCleanup := os.Getenv("BYOH_SKIP_KERNEL_MODULE_CLEANUP") == "true"
+	//
+	// Uses 'enable'/'disable' (matching MANUAL_CSR_APPROVAL above), not 'true'/'false': kustomize
+	// re-serializes manager.yaml and drops the quotes around "${VAR:=default}", so an unquoted
+	// true/false would parse as a YAML bool instead of a string, breaking clusterctl's conversion
+	// of the rendered Deployment's env value back into a typed corev1.EnvVar.
+	skipKernelModuleCleanup := os.Getenv("BYOH_SKIP_KERNEL_MODULE_CLEANUP") == "enable"
 	if err = (&byohcontrollers.K8sInstallerConfigReconciler{
 		Client:                  mgr.GetClient(),
 		Scheme:                  mgr.GetScheme(),
