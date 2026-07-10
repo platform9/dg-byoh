@@ -24,7 +24,7 @@ spec:
       replicas: ${CONTROL_PLANE_MACHINE_COUNT}
     variables:
       - name: bundleLookupBaseRegistry
-        value: "projects.registry.vmware.com/cluster_api_provider_bringyourownhost"
+        value: "quay.io/platform9"
       - name: controlPlaneIpAddr
         value: ${CONTROL_PLANE_ENDPOINT_IP}
       - name: kubeVipPodManifest
@@ -75,7 +75,7 @@ spec:
                 ip: 127.0.0.1
             volumes:
             - hostPath:
-                path: /etc/kubernetes/admin.conf
+                path: /etc/kubernetes/super-admin.conf
                 type: FileOrCreate
               name: kubeconfig
           status: {}

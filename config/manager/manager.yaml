@@ -28,10 +28,12 @@ spec:
         env:
         - name: MANUAL_CSR_APPROVAL
           value: "${MANUAL_CSR_APPROVAL:=disable}"
+        - name: BYOH_SKIP_KERNEL_MODULE_CLEANUP
+          value: "${BYOH_SKIP_KERNEL_MODULE_CLEANUP:=disable}"
         args:
         - --enable-leader-election
         - "--metrics-bind-addr=127.0.0.1:8080"
-        image: docker.io/psarwate/pf9-cluster-api-byoh-controller:dev 
+        image: gcr.io/k8s-staging-cluster-api/cluster-api-byoh-controller:dev
         name: manager
         resources:
           limits:

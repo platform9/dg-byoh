@@ -26,7 +26,7 @@ else
 fi
 
 ## remove kernal modules
-modprobe -rq overlay || true && modprobe -r br_netfilter || true
+{{if not .SkipKernelModuleCleanup}}modprobe -rq overlay || true && modprobe -r br_netfilter || true{{end}}
 
 ## restore firewall to its pre-install state
 if command -v ufw >>/dev/null; then
