@@ -140,7 +140,16 @@ func main() {
 			os.Exit(1)
 		}
 	}
-	if err = (&byohcontrollers.K8sInstallerConfigReconciler{Client: mgr.GetClient(), Scheme: mgr.GetScheme()}).SetupWithManager(mgr); err != nil {
+	// Set 'BYOH_SKIP_KERNEL_MODULE_CLEANUP=true' to skip unloading overlay/br_netfilter kernel
+	// modules during uninstall. Real BYO hosts own their kernel and must unload these modules;
+	// e2e's containerized hosts share Docker's kernel, so unloading them there breaks Docker's
+	// own bridge networking and hangs cluster deletion.
+	skipKernelModuleCleanup := os.Getenv("BYOH_SKIP_KERNEL_MODULE_CLEANUP") == "true"
+	if err = (&byohcontrollers.K8sInstallerConfigReconciler{
+		Client:                  mgr.GetClient(),
+		Scheme:                  mgr.GetScheme(),
+		SkipKernelModuleCleanup: skipKernelModuleCleanup,
+	}).SetupWithManager(mgr); err != nil {
 		setupLog.Error(err, "unable to create controller", "controller", "K8sInstallerConfig")
 		os.Exit(1)
 	}

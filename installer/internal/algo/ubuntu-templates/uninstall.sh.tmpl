@@ -26,8 +26,7 @@ else
 fi
 
 ## remove kernal modules
-## DIAGNOSTIC: temporarily disabled to test whether this causes the CI deletion hang - revert before merging
-# modprobe -rq overlay || true && modprobe -r br_netfilter || true
+{{if not .SkipKernelModuleCleanup}}modprobe -rq overlay || true && modprobe -r br_netfilter || true{{end}}
 
 ## restore firewall to its pre-install state
 if command -v ufw >>/dev/null; then
