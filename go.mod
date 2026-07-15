@@ -49,7 +49,7 @@ require (
 	github.com/blang/semver v3.5.1+incompatible // indirect
 	github.com/blang/semver/v4 v4.0.0 // indirect
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
-	github.com/containerd/containerd v1.7.32 // indirect
+	github.com/containerd/containerd v1.7.33 // indirect
 	github.com/coredns/caddy v1.1.0 // indirect
 	github.com/coredns/corefile-migration v1.0.20 // indirect
 	github.com/coreos/go-iptables v0.6.0 // indirect
