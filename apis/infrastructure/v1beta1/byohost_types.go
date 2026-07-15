@@ -49,6 +49,13 @@ type ByoHostSpec struct {
 	// +optional
 	// UninstallationScript *string `json:"uninstallationScript,omitempty"`
 	UninstallationSecret *corev1.ObjectReference `json:"uninstallationSecret,omitempty"`
+
+	// TestCIStaleCodegenField is a throwaway field added to deliberately
+	// break the generated-changes-diff CI check without running
+	// `make generate`/`make manifests` afterward. Never merge this — it
+	// exists only to prove the check fails as expected.
+	// +optional
+	TestCIStaleCodegenField *string `json:"testCIStaleCodegenField,omitempty"`
 }
 
 // HostInfo is a set of details about the host platform.
