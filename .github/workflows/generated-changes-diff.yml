@@ -23,5 +23,5 @@ jobs:
 
       - name: Check that manifests and generated code have been committed
         run: |
-          make manifests generate fmt
-          git diff --exit-code && [ -z "$(git ls-files --others --exclude-standard)" ] || (echo "Generated files are out of date. Run 'make manifests generate fmt' locally and commit the result (including any newly generated files)." && exit 1)
+          make manifests generate fmt cluster-templates cluster-templates-e2e
+          git diff --exit-code && [ -z "$(git ls-files --others --exclude-standard)" ] || (echo "Generated files are out of date. Run 'make manifests generate fmt cluster-templates cluster-templates-e2e' locally and commit the result (including any newly generated files)." && exit 1)
