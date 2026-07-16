@@ -45,7 +45,7 @@ func TestByohAgentBundleURL(t *testing.T) {
 
 			version.Version = tc.versionOvrd
 
-			got := ByohAgentBundleURL()
+			got := byohAgentBundleURL()
 			if got != tc.want {
 				t.Errorf("ByohAgentBundleURL() = %q, want %q", got, tc.want)
 			}

@@ -44,12 +44,12 @@ const (
 	PcdKaapiRegionKey = "pcd-kaapi.pf9.io/region"
 )
 
-// ByohAgentBundleURL returns the OCI bundle reference for the agent deb
+// byohAgentBundleURL returns the OCI bundle reference for the agent deb
 // package matching byohctl's own build version. byohctl and the agent
 // bundle are published from the same commit under the same
 // git-describe tag (see .github/workflows/build-push-agent-bundle.yml),
 // so there is no separate agent version to track by hand.
-func ByohAgentBundleURL() string {
+func byohAgentBundleURL() string {
 	return fmt.Sprintf("%s:%s", byohAgentDebRepo, version.GetVersion())
 }
 
