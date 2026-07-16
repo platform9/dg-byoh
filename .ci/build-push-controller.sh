@@ -26,9 +26,20 @@ GO_VERSION=${GO_VERSION:-1.22.5}
 
 IMAGE_REGISTRY=${IMAGE_REGISTRY:-"quay.io/platform9/cluster-api-provider-bringyourownhost"}
 IMAGE_NAME=${IMAGE_NAME:-"controller-manager"}
-IMAGE_TAG=${IMAGE_TAG:-$(make -C "${project_root}" tag)}
+IMAGE_TAG=${IMAGE_TAG:-$(make --no-print-directory -C "${project_root}" tag)}
 IMAGE_NAME_TAG=${IMAGE_NAME}:${IMAGE_TAG}
 IMAGE_REGISTRY_NAME_TAG=${IMAGE_REGISTRY}/${IMAGE_NAME_TAG}
+
+# make -C implicitly enables --print-directory on some GNU Make versions
+# (confirmed: not on this repo's dev-Mac Make 3.81, but yes on the Ubuntu
+# CI runner's newer Make) -- without --no-print-directory above, the
+# "Entering directory" chatter leaks into IMAGE_TAG via command
+# substitution and corrupts the docker -t argument. Fail loud if it ever
+# recurs instead of silently building/pushing a mistagged image.
+if [[ "${IMAGE_TAG}" =~ [[:space:]] ]]; then
+  echo "ERROR: IMAGE_TAG contains whitespace, likely make output leaked into the tag: '${IMAGE_TAG}'" >&2
+  exit 1
+fi
 
 
 main() {
