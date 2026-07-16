@@ -16,7 +16,7 @@ SHELL := /usr/bin/env bash
 # hardcoding or independently recomputing anything.
 # Override for one-off local testing: `make build VERSION=v9.9.9-test`.
 REPO_ROOT := $(shell git rev-parse --show-toplevel)
-VERSION ?= $(shell $(MAKE) -C $(REPO_ROOT) tag)
+VERSION ?= $(shell $(MAKE) --no-print-directory -C $(REPO_ROOT) tag)
 
 # Build settings
 BINARY_NAME := byohctl
