@@ -31,5 +31,11 @@ jobs:
           username: ${{ secrets.QUAY_USERNAME }}
           password: ${{ secrets.QUAY_TOKEN }}
 
+      - name: Print tag
+        run: |
+          tag=$(git describe --dirty --tags --match='v*' 2>/dev/null || echo "v0.0.0-$(git rev-parse --short HEAD)")
+          echo "Agent bundle tag: ${tag}"
+          echo "BYOH_DEB_VERSION=${tag}" >> "$GITHUB_ENV"
+
       - name: Build and push agent deb bundle
         run: bash .ci/build-push-agent-deb.sh
