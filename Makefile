@@ -20,7 +20,7 @@ BYOH_BASE_IMG_DEV = byoh/node:dev
 # (~/pf9/kaapi/Makefile). Distinct from TAG above, which is the
 # controller-manager image tag (still static "dev" by default); unifying
 # that is separate follow-up work.
-GIT_VERSION := $(shell git describe --dirty --tags --match='v*' 2>/dev/null || echo "v0.0.0-$(shell git rev-parse --short HEAD)")
+GIT_VERSION := $(shell git describe --abbrev=8 --dirty --tags --match='v*' 2>/dev/null || echo "v0.0.0-$(shell git rev-parse --short=8 HEAD)")
 
 .PHONY: tag
 tag: ## Print the predictable git-derived version used for agent/byohctl artifacts
