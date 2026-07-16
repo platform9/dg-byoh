@@ -32,10 +32,7 @@ jobs:
           password: ${{ secrets.QUAY_TOKEN }}
 
       - name: Print tag
-        run: |
-          tag=$(make tag)
-          echo "Agent bundle tag: ${tag}"
-          echo "BYOH_DEB_VERSION=${tag}" >> "$GITHUB_ENV"
+        run: make tag
 
       - name: Build and push agent deb bundle
         run: bash .ci/build-push-agent-deb.sh
