@@ -1,5 +1,5 @@
 set -ex
-export BYOH_DEB_VERSION=${BYOH_DEB_VERSION:-$(git describe --dirty --tags --match='v*' 2>/dev/null || echo "v0.0.0-$(git rev-parse --short HEAD)")}
+export BYOH_DEB_VERSION=${BYOH_DEB_VERSION:-$(make tag)}
 
 echo 'alias shasum="sha512sum"' >> ~/.bashrc
 source ~/.bashrc

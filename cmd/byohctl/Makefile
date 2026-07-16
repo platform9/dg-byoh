@@ -10,8 +10,13 @@
 SHELL := /usr/bin/env bash
 
 # Version information
-GIT_VERSION := $(shell git describe --dirty --tags --match='v*' 2>/dev/null || echo "v0.0.0-$(shell git rev-parse --short HEAD)")
-VERSION ?= $(GIT_VERSION)
+# VERSION defaults to the root Makefile's `make tag` target -- the single
+# source of truth every agent-side artifact (byohctl, the agent bundle)
+# derives its version from, so they always agree without either side
+# hardcoding or independently recomputing anything.
+# Override for one-off local testing: `make build VERSION=v9.9.9-test`.
+REPO_ROOT := $(shell git rev-parse --show-toplevel)
+VERSION ?= $(shell $(MAKE) -C $(REPO_ROOT) tag)
 
 # Build settings
 BINARY_NAME := byohctl
