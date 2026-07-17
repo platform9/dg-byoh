@@ -80,7 +80,7 @@ help:
 	@echo "  make build                    # Build for linux/amd64"
 	@echo "  make build GOOS=darwin        # Build for macOS"
 	@echo "  make build-all                # Build for all platforms"
-	@echo "  make build VERSION=v9.9.9-test # Override version for local testing"
+	@echo "  make build MAJOR=2 MINOR=1    # Build version 2.1.BUILD_NUMBER"
 	@echo ""
 	@echo "Version: $(VERSION)"
 	@echo "Output directory: $(BUILD_DIR)/"
