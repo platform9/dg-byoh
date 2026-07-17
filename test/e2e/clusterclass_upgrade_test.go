@@ -91,7 +91,7 @@ var _ = Describe("Clusterclass upgrade test [K8s-Upgrade-ClusterClass]", func() 
 			Expect(err).NotTo(HaveOccurred())
 			defer output.Close()
 			// read the log of host agent container in backend, and write it
-			agentLogFile := fmt.Sprintf("/tmp/host-agent-%d.log", i)
+			agentLogFile := fmt.Sprintf("/tmp/host-agent-%s.log", byoHostName)
 
 			f := WriteDockerLog(output, agentLogFile)
 			defer func() {

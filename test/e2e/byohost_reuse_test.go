@@ -39,7 +39,7 @@ var _ = Describe("When BYO Host rejoins the capacity pool [Reuse]", func() {
 		cancelWatches       context.CancelFunc
 		clusterResources    *clusterctl.ApplyClusterTemplateAndWaitResult
 		byohostContainerIDs []string
-		agentLogFile1       = "/tmp/host-agent1.log"
+		agentLogFile1       = fmt.Sprintf("/tmp/host-agent1-%s.log", util.RandomString(6))
 		agentLogFile2       = "/tmp/host-agent-reuse.log"
 	)
 

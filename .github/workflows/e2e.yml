@@ -14,39 +14,18 @@ on:
 
 jobs:
   e2e:
-    name: e2e (${{ matrix.name }})
     runs-on: ubuntu-22.04
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: pr-blocking
-            focus: "\\[PR-Blocking\\]"
-          - name: cluster-class
-            focus: "\\[Cluster-Class\\]"
-          - name: installer
-            focus: "\\[Installer\\]"
-          - name: reuse
-            focus: "\\[Reuse\\]"
-          - name: md-scale
-            focus: "\\[MD-Scale\\]"
-          - name: k8s-upgrade-cluster
-            focus: "\\[K8s-Upgrade-Cluster\\]"
-          - name: k8s-upgrade-clusterclass
-            focus: "\\[K8s-Upgrade-ClusterClass\\]"
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
 
     - name: Set up Go
-      uses: actions/setup-go@v4
+      uses: actions/setup-go@v7
       with:
-        go-version: 1.24.5
-
-    - name: Install ginkgo
-      run: go install github.com/onsi/ginkgo/v2/ginkgo@v2.9.2
+        go-version: 1.26.2
+        cache: true
 
     - name: turn off swap
       run: sudo swapoff -a
@@ -54,5 +33,5 @@ jobs:
     - name: Set netfilter conntrack max
       run: sudo sysctl -w net.netfilter.nf_conntrack_max=131072
 
-    - name: Run e2e tests (${{ matrix.name }})
-      run: yes | GINKGO_FOCUS="${{ matrix.focus }}" make test-e2e
+    - name: Run e2e tests
+      run: yes | GINKGO_NODES=4 make test-e2e

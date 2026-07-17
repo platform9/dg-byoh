@@ -89,7 +89,7 @@ var _ = Describe("When testing MachineDeployment scale out/in [MD-Scale]", func(
 			Expect(err).NotTo(HaveOccurred())
 
 			// read the log of host agent container in backend, and write it
-			agentLogFile := fmt.Sprintf("/tmp/host-agent-%d.log", i)
+			agentLogFile := fmt.Sprintf("/tmp/host-agent-%s.log", byoHostName)
 
 			f := WriteDockerLog(output, agentLogFile)
 			defer func() {
